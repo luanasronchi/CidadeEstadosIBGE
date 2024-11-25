@@ -1,11 +1,8 @@
 const express = require('express');
 const mysql = require('mysql2');
-
-// Configurações do servidor
 const app = express();
 const PORT = 3000;
 
-// Configuração do banco de dados
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -13,7 +10,6 @@ const db = mysql.createConnection({
     database: 'ibge_cidades',
 });
 
-// Conexão com o banco de dados
 db.connect((err) => {
     if (err) {
         console.error('Erro ao conectar ao banco de dados:', err);
@@ -23,8 +19,8 @@ db.connect((err) => {
 });
 
 app.get('/cidades/:sigla', (req, res) => {
-    const sigla = req.params.sigla.toUpperCase(); // Sigla do estado
-    console.log('Buscando cidades para o estado:', sigla); // Log de depuração
+    const sigla = req.params.sigla.toUpperCase(); 
+    console.log('Buscando cidades para o estado:', sigla); 
 
     const query = `
         SELECT cidades.Nome AS cidade
@@ -35,15 +31,14 @@ app.get('/cidades/:sigla', (req, res) => {
 
     db.query(query, [sigla], (err, results) => {
         if (err) {
-            console.error('Erro na query:', err); // Log de erro
+            console.error('Erro na query:', err); 
             return res.status(500).json({ error: 'Erro ao buscar cidades' });
         }
-        console.log('Resultados:', results); // Log de resultados
+        console.log('Resultados:', results); 
         res.json(results);
     });
 });
 
-// Inicia o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

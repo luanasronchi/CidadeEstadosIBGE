@@ -1,7 +1,5 @@
-drop database ibge_cidades;
-
+DROP database ibge_cidades;
 CREATE DATABASE ibge_cidades;
-
 USE ibge_cidades;
 
 CREATE TABLE estados (
